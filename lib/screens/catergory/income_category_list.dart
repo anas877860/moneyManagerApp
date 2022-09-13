@@ -14,14 +14,24 @@ class IncomeCategoryList extends StatelessWidget {
           return ListView.separated(
               itemBuilder: (ctx, index) {
                 final category = newList[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(category.name),
-                    trailing: IconButton(
-                        onPressed: () {
-                          CategoryDB.instance.deleteCategory(category.id);
-                        },
-                        icon: const Icon(Icons.delete)),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      tileColor: Colors.cyan,
+                      title: Text(category.name),
+                      trailing: IconButton(
+                          onPressed: () {
+                            CategoryDB.instance.deleteCategory(category.id);
+                          },
+                          icon: const Icon(Icons.delete)),
+                    ),
                   ),
                 );
               },

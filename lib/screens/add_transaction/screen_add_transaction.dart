@@ -29,6 +29,7 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.5),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20.0),

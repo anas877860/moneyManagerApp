@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager_flutter/db/category/category_db.dart';
+
 import 'package:money_manager_flutter/screens/catergory/expense_category_list.dart';
 import 'package:money_manager_flutter/screens/catergory/income_category_list.dart';
 
@@ -22,27 +22,33 @@ class _ScreenCategoryState extends State<ScreenCategory>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TabBar(
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
-            controller: _tabController,
-            tabs: const [
-              Tab(
-                text: 'INCOME',
-              ),
-              Tab(
-                text: 'EXPENSE',
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          TabBar(
+             indicator: BoxDecoration(
+      borderRadius: BorderRadius.circular(50), // Creates border
+      color: Colors.cyan), //Change back
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.grey,
+              controller: _tabController,
+              tabs: const [
+                Tab(
+                  text: 'INCOME',
+                ),
+                Tab(
+                  text: 'EXPENSE',
+                ),
+              ]),
+          Expanded(
+            child: TabBarView(controller: _tabController, children: const [
+              IncomeCategoryList(),
+              ExpenseCategoryList(),
             ]),
-        Expanded(
-          child: TabBarView(controller: _tabController, children: const [
-            IncomeCategoryList(),
-            ExpenseCategoryList(),
-          ]),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

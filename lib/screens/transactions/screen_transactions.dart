@@ -26,6 +26,9 @@ class ScreenTransactions extends StatelessWidget {
                 startActionPane:
                     ActionPane(motion: const BehindMotion(), children: [
                   SlidableAction(
+                    foregroundColor: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(20),
+                    backgroundColor: Colors.white.withOpacity(0.5),
                     onPressed: (ctx) {
                       TransactionDB.instance.deleteTransaction(_value.id!);
                     },
@@ -34,8 +37,15 @@ class ScreenTransactions extends StatelessWidget {
                   ),
                 ]),
                 child: Card(
+                   shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                   elevation: 0,
                   child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      tileColor: Colors.cyan,
                     leading: CircleAvatar(
                       backgroundColor: _value.type == CategoryType.income
                           ? Colors.green
