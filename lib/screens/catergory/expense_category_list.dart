@@ -20,17 +20,26 @@ class ExpenseCategoryList extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: ListTile(
-                      tileColor: Colors.cyan,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: const LinearGradient(
+                          colors: [Colors.blue, Colors.purple],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
                       ),
-                      title: Text(category.name),
-                      trailing: IconButton(
-                          onPressed: () {
-                            CategoryDB.instance.deleteCategory(category.id);
-                          },
-                          icon: const Icon(Icons.delete)),
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        title: Text(category.name),
+                        trailing: IconButton(
+                            onPressed: () {
+                              CategoryDB.instance.deleteCategory(category.id);
+                            },
+                            icon: const Icon(Icons.delete)),
+                      ),
                     ),
                   ),
                 );

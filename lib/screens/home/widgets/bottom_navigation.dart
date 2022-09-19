@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:money_manager_flutter/screens/home/screen_home.dart';
 
 class MoneyManagerBottomNavigation extends StatelessWidget {
@@ -7,23 +8,36 @@ class MoneyManagerBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: ScreenHome.selectedIndexNotifier,
-      builder: (BuildContext ctx,int updatedIndex,Widget? _) {
-        return BottomNavigationBar(
-          selectedFontSize: 17,
-          unselectedFontSize: 12,
-          backgroundColor: Colors.cyan,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black45,
-          currentIndex: updatedIndex,
-          onTap: (newIndex){
-          ScreenHome.selectedIndexNotifier.value=newIndex;
-          },
-          items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: "TRANSACTIONS"),
-          BottomNavigationBarItem(icon: Icon(Icons.category),label: "CATEGORY"),
-        ]);
-      }
-    );
+        valueListenable: ScreenHome.selectedIndexNotifier,
+        builder: (BuildContext ctx, int updatedIndex, Widget? _) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue,Colors.purple],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              
+               
+              ),
+            ),
+            child: BottomNavigationBar(
+              selectedFontSize: 17,
+              unselectedFontSize: 12,
+              backgroundColor: Colors.transparent,
+              selectedItemColor: Colors.black,
+              unselectedItemColor: Colors.black45,
+              currentIndex: updatedIndex,
+              onTap: (newIndex) {
+                ScreenHome.selectedIndexNotifier.value = newIndex;
+              },
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home), label: "TRANSACTIONS"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.category), label: "CATEGORY"),
+              ],
+            ),
+          );
+        });
   }
 }

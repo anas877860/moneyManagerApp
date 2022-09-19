@@ -21,43 +21,85 @@ class ScreenTransactions extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             itemBuilder: (ctx, index) {
               final _value = newList[index];
-              return Slidable(
-                 key: Key(_value.id!),
-                startActionPane:
-                    ActionPane(motion: const BehindMotion(), children: [
-                  SlidableAction(
-                    foregroundColor: Colors.black.withOpacity(0.5),
+              return Container(
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    backgroundColor: Colors.white.withOpacity(0.5),
-                    onPressed: (ctx) {
-                      TransactionDB.instance.deleteTransaction(_value.id!);
-                    },
-                    icon: Icons.delete,
-                    label: "delete",
-                  ),
-                ]),
-                child: Card(
-                   shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                    gradient: const LinearGradient(
+                        colors: [Colors.black, Colors.white])),
+                child: Slidable(
+                  key: Key(_value.id!),
+                  startActionPane:
+                      ActionPane(motion: const BehindMotion(), children: [
+                    SlidableAction(
+                      foregroundColor: Colors.black,
+                      borderRadius: BorderRadius.circular(20),
+                      backgroundColor: Colors.transparent,
+                      onPressed: (ctx) {
+                        TransactionDB.instance.deleteTransaction(_value.id!);
+                      },
+                      icon: Icons.delete,
+                      label: "delete",
+                    ),
+                  ]),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: const LinearGradient(
+                          colors: [Colors.blue, Colors.purple],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
                       ),
-                  elevation: 0,
-                  child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      tileColor: Colors.cyan,
-                    leading: CircleAvatar(
-                      backgroundColor: _value.type == CategoryType.income
-                          ? Colors.green
-                          : Colors.red,
-                      radius: 50,
-                      child: Text(
-                        parseDate(_value.date),
-                        textAlign: TextAlign.center,
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        leading: _value.type == CategoryType.income
+                            ? Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [Colors.red, Colors.black],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 50,
+                                  child: Text(
+                                    parseDate(_value.date),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [Colors.green, Colors.black],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                ),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 50,
+                                  child: Text(
+                                    parseDate(_value.date),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                        title: Text("Rs ${_value.amount}"),
+                        subtitle: Text(_value.purpose),
                       ),
                     ),
-                    title: Text("Rs ${_value.amount}"),
-                    subtitle: Text(_value.purpose),
                   ),
                 ),
               );

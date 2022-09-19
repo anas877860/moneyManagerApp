@@ -3,6 +3,7 @@ import 'package:money_manager_flutter/db/category/category_db.dart';
 import 'package:money_manager_flutter/db/transaction/transaction_db.dart';
 import 'package:money_manager_flutter/models/category/category_model.dart';
 import 'package:money_manager_flutter/models/transaction/transaction_model.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class ScreenAddTransaction extends StatefulWidget {
   static const routName = 'add-transaction';
@@ -28,107 +29,132 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.5),
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              controller: _purposeTextEditingController,
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(hintText: 'Purpose'),
-            ),
-            TextFormField(
-              controller: _amountTextEditingController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(hintText: 'Amount'),
-            ),
-            TextButton.icon(
-              onPressed: () async {
-                final _selectDateTemp = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate:
-                        DateTime.now().subtract(const Duration(days: 30)),
-                    lastDate: DateTime.now());
-                if (_selectDateTemp == null) {
-                  return;
-                } else {
-                  // print(_selectDateTemp.toString());
-                  setState(() {
-                    _selectDate = _selectDateTemp;
-                  });
-                }
-              },
-              icon: const Icon(Icons.calendar_today),
-              label: Text(
-                  _selectDate == null ? 'Select Date' : _selectDate.toString()),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Radio<CategoryType>(
-                        value: CategoryType.income,
-                        groupValue: _selectCategoryType,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectCategoryType = CategoryType.income;
-                            _categoryID = null;
-                          });
-                        }),
-                    const Text('Income'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio<CategoryType>(
-                        value: CategoryType.expense,
-                        groupValue: _selectCategoryType,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectCategoryType = CategoryType.expense;
-                            _categoryID = null;
-                          });
-                        }),
-                    const Text('Expense'),
-                  ],
-                ),
-              ],
-            ),
-            DropdownButton<String>(
-                value: _categoryID,
-                hint: const Text('Select Category'),
-                items: (_selectCategoryType == CategoryType.income
-                        ? CategoryDB().incomeCategoryListListener
-                        : CategoryDB().expenseCategoryListListener)
-                    .value
-                    .map((e) {
-                  return DropdownMenuItem(
-                    onTap: () {
-                      _selectCategoryModel = e;
-                    },
-                    value: e.id,
-                    child: Text(e.name),
-                  );
-                }).toList(),
-                onChanged: (selectedValue) {
-                  setState(() {
-                    _categoryID = selectedValue;
-                  });
-                }),
-            ElevatedButton(
-                onPressed: () {
-                  addTransaction();
-                },
-                child: const Text('submit'))
-          ],
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.blue, Colors.purple, Colors.red],
         ),
-      )),
+      ),
+      child: Scaffold(
+        appBar: NewGradientAppBar(
+            gradient: const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.red, Colors.purple, Colors.blue])),
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: _purposeTextEditingController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    hintText: 'Purpose'),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                  controller: _amountTextEditingController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    hintText: 'Amount',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  )),
+              TextButton.icon(
+                onPressed: () async {
+                  final _selectDateTemp = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate:
+                          DateTime.now().subtract(const Duration(days: 30)),
+                      lastDate: DateTime.now());
+                  if (_selectDateTemp == null) {
+                    return;
+                  } else {
+                    // print(_selectDateTemp.toString());
+                    setState(() {
+                      _selectDate = _selectDateTemp;
+                    });
+                  }
+                },
+                icon: const Icon(Icons.calendar_today),
+                label: Text(_selectDate == null
+                    ? 'Select Date'
+                    : _selectDate.toString()),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      Radio<CategoryType>(
+                          value: CategoryType.income,
+                          groupValue: _selectCategoryType,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _selectCategoryType = CategoryType.income;
+                              _categoryID = null;
+                            });
+                          }),
+                      const Text('Income'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio<CategoryType>(
+                         
+                          value: CategoryType.expense,
+                          groupValue: _selectCategoryType,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _selectCategoryType = CategoryType.expense;
+                              _categoryID = null;
+                            });
+                          }),
+                      const Text('Expense'),
+                    ],
+                  ),
+                ],
+              ),
+              DropdownButton<String>(
+                  value: _categoryID,
+                  hint: const Text('Select Category'),
+                  items: (_selectCategoryType == CategoryType.income
+                          ? CategoryDB().incomeCategoryListListener
+                          : CategoryDB().expenseCategoryListListener)
+                      .value
+                      .map((e) {
+                    return DropdownMenuItem(
+                      onTap: () {
+                        _selectCategoryModel = e;
+                      },
+                      value: e.id,
+                      child: Text(e.name),
+                    );
+                  }).toList(),
+                  onChanged: (selectedValue) {
+                    setState(() {
+                      _categoryID = selectedValue;
+                    });
+                  }),
+              ElevatedButton(
+                  onPressed: () {
+                    addTransaction();
+                  },
+                  child: const Text('submit'))
+            ],
+          ),
+        )),
+      ),
     );
   }
 

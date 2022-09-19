@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:money_manager_flutter/screens/add_transaction/screen_add_transaction.dart';
 import 'package:money_manager_flutter/screens/catergory/category_add_popup.dart';
 import 'package:money_manager_flutter/screens/catergory/screen_category.dart';
 import 'package:money_manager_flutter/screens/home/widgets/bottom_navigation.dart';
 import 'package:money_manager_flutter/screens/transactions/screen_transactions.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class ScreenHome extends StatelessWidget {
- const  ScreenHome({Key? key}) : super(key: key);
+  const ScreenHome({Key? key}) : super(key: key);
   static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
-  final _page = const [ScreenTransactions(),  ScreenCategory()];
+  final _page = const [ScreenTransactions(), ScreenCategory()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
-      appBar: AppBar(
-        title: const Text("MONEY MANAGER"),
-        centerTitle: true,
-      ),
+      appBar: NewGradientAppBar(
+          title: const Text("MONEY MANAGER"),
+          centerTitle: true,
+          gradient: const LinearGradient(
+              colors: [Colors.blue, Colors.purple, Colors.red])),
       bottomNavigationBar: const MoneyManagerBottomNavigation(),
       body: SafeArea(
         child: ValueListenableBuilder(
@@ -44,7 +44,18 @@ class ScreenHome extends StatelessWidget {
             //     CategoryDB().insertCategory(_sample);
           }
         },
-        child: const Icon(Icons.add),
+        child: Container(
+          width: 60,
+          height: 60,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [Colors.blue, Colors.purple],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+            child: const Icon(Icons.add,size: 40,)),
       ),
     );
   }

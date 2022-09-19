@@ -16,7 +16,7 @@ class _ScreenCategoryState extends State<ScreenCategory>
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    
+
     super.initState();
   }
 
@@ -27,9 +27,10 @@ class _ScreenCategoryState extends State<ScreenCategory>
       child: Column(
         children: [
           TabBar(
-             indicator: BoxDecoration(
-      borderRadius: BorderRadius.circular(50), // Creates border
-      color: Colors.cyan), //Change back
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50), // Creates border
+                  gradient: const LinearGradient(
+                      colors: [Colors.blue, Colors.purple])), //Change back
               labelColor: Colors.white,
               unselectedLabelColor: Colors.grey,
               controller: _tabController,
