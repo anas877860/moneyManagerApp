@@ -63,17 +63,18 @@ class SignUpScreen extends StatelessWidget {
                         password: _passwordTextController.text)
                     .then((value) {
                   log("Created New Account");
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ScreenHome()),
-                  );
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScreenHome()),
+                      (route) => false);
                 }).onError((error, stackTrace) {
                   log("Error ${error.toString()}");
-                   ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Email or password doesn't exist"),
-                  ),
-                );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Email or password doesn't exist"),
+                    ),
+                  );
                 });
               }),
             ]),

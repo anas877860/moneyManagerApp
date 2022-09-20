@@ -41,8 +41,8 @@ class ResetPassword extends StatelessWidget {
               ),
               firebaseButton(context, "Reset Password", () async {
                 await FirebaseAuth.instance
-                    .sendPasswordResetEmail(email: _emailTextController.text);
-                // .then((value) => Navigator.of(context).pop());
+                    .sendPasswordResetEmail(email: _emailTextController.text)
+                    .then((value) => Navigator.of(context).pop());
               })
             ]),
           ),

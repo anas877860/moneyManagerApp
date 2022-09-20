@@ -35,10 +35,11 @@ class SignInScreen extends StatelessWidget {
                       password: _passwordTextController.text)
                   .then((value) {
                 log("Sign In");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ScreenHome()));
+                 Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScreenHome()),
+                      (route) => false);
               }).onError((error, stackTrace) {
                 log("Error ${error.toString()}");
                 ScaffoldMessenger.of(context).showSnackBar(

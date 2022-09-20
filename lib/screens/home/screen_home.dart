@@ -1,9 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:money_manager_flutter/screens/add_transaction/screen_add_transaction.dart';
 import 'package:money_manager_flutter/screens/catergory/category_add_popup.dart';
 import 'package:money_manager_flutter/screens/catergory/screen_category.dart';
 import 'package:money_manager_flutter/screens/home/widgets/bottom_navigation.dart';
+import 'package:money_manager_flutter/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:money_manager_flutter/screens/transactions/screen_transactions.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
@@ -16,10 +20,24 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NewGradientAppBar(
-          title: const Text("MONEY MANAGER"),
-          centerTitle: true,
-          gradient: const LinearGradient(
-              colors: [Colors.blue, Colors.purple, Colors.red])),
+        title: const Text("MONEY MANAGER"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  log("Sign out");
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      (route) => false);
+                });
+              },
+              icon: const Icon(Icons.logout))
+        ],
+        gradient: const LinearGradient(
+            colors: [Colors.blue, Colors.purple, Colors.red]),
+      ),
       bottomNavigationBar: const MoneyManagerBottomNavigation(),
       body: SafeArea(
         child: ValueListenableBuilder(
@@ -45,8 +63,8 @@ class ScreenHome extends StatelessWidget {
           }
         },
         child: Container(
-          width: 60,
-          height: 60,
+            width: 60,
+            height: 60,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
@@ -55,7 +73,10 @@ class ScreenHome extends StatelessWidget {
                 end: Alignment.centerRight,
               ),
             ),
-            child: const Icon(Icons.add,size: 40,)),
+            child: const Icon(
+              Icons.add,
+              size: 40,
+            )),
       ),
     );
   }
