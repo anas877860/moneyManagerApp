@@ -10,6 +10,7 @@ import 'package:money_manager_flutter/screens/splash_screen/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {

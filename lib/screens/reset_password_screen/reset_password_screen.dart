@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager_flutter/reusable_widget/reusable_widgets.dart';
@@ -11,11 +13,15 @@ class ResetPassword extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white, //change your color here
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           "Reset Password",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: Container(
@@ -39,10 +45,19 @@ class ResetPassword extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              firebaseButton(context, "Reset Password", () async {
+              firebaseButton(context, "Send Request", () async {
+                log(_emailTextController.text);
                 await FirebaseAuth.instance
                     .sendPasswordResetEmail(email: _emailTextController.text)
-                    .then((value) => Navigator.of(context).pop());
+                    .then((value) => Navigator.of(context).pop())
+                    .onError((error, stackTrace) {
+                  log("Error ${error.toString()}");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Error, There is no user record corresponding to this identifier. The user may have been deleted."),
+                    ),
+                  );
+                });
               })
             ]),
           ),

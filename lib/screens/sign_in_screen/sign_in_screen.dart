@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager_flutter/reusable_widget/reusable_widgets.dart';
 import 'package:money_manager_flutter/screens/home/screen_home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -29,17 +30,18 @@ class SignInScreen extends StatelessWidget {
                 _passwordTextController),
             forgetPassword(context),
             firebaseButton(context, 'Sign In', () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('email', 'useremail@gmail.com');
               await FirebaseAuth.instance
                   .signInWithEmailAndPassword(
                       email: _emailTextController.text,
                       password: _passwordTextController.text)
                   .then((value) {
                 log("Sign In");
-                 Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ScreenHome()),
-                      (route) => false);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ScreenHome()),
+                    (route) => false);
               }).onError((error, stackTrace) {
                 log("Error ${error.toString()}");
                 ScaffoldMessenger.of(context).showSnackBar(

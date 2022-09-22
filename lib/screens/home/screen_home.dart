@@ -10,6 +10,7 @@ import 'package:money_manager_flutter/screens/home/widgets/bottom_navigation.dar
 import 'package:money_manager_flutter/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:money_manager_flutter/screens/transactions/screen_transactions.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenHome extends StatelessWidget {
   const ScreenHome({Key? key}) : super(key: key);
@@ -24,7 +25,9 @@ class ScreenHome extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('email');
                 FirebaseAuth.instance.signOut().then((value) {
                   log("Sign out");
                   Navigator.pushAndRemoveUntil(
