@@ -64,7 +64,7 @@ class ScreenTransactions extends StatelessWidget {
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: LinearGradient(
-                                    colors: [Colors.red, Colors.black],
+                                    colors: [Colors.green, Colors.black],
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                   ),
@@ -82,7 +82,7 @@ class ScreenTransactions extends StatelessWidget {
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   gradient: LinearGradient(
-                                    colors: [Colors.green, Colors.black],
+                                    colors: [Colors.red, Colors.black],
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
                                   ),
